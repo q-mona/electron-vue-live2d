@@ -64,7 +64,6 @@ export default {
   font-size: 13px;
   font-weight: 400;
   text-overflow: ellipsis;
-  text-transform: uppercase;
   overflow: hidden;
   position: absolute;
   top: 20%;
