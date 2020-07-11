@@ -56,11 +56,13 @@ export default new Vuex.Store({
   },
   actions: {
     // 获得互动内容并显示消息框
-    async getMsg({ state, commit }) {
+    getMsg({ state, commit, dispatch }) {
       // v1.hitokoto.cn这网址会随机返回一条互动 不知道是谁的反正用就vans了
-      const res = await Vue.axios.get('https://v1.hitokoto.cn/')
-      commit('setMsg', res.data.hitokoto)
-      commit('setFade', 1) // 消息框opacity=1
+      Vue.axios.get('https://v1.hitokoto.cn/').then(res => {
+        commit('setMsg', res.data.hitokoto)
+        commit('setFade', 1) // 消息框opacity=1
+        dispatch('removeMsg')
+      })
     },
     // 移除消息框
     removeMsg({ state, commit }) {

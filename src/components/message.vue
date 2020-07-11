@@ -6,7 +6,7 @@
 
 <script>
 import Vue from 'vue'
-import { initMsg } from '../assets/js/message'
+
 export default {
   data() {
     return {
@@ -31,23 +31,7 @@ export default {
       }, 5000)
     }
   },
-  async mounted() {
-    // 初始化消息
-    this.$store.commit('setMsg', initMsg)
-    this.$store.commit('setFade', 1)
-    this.$store.dispatch('removeMsg')
-
-    // 定时器存在就删了 防止叠加
-    if (this.time) {
-      this.time = ''
-    }
-
-    // 固定时间获取互动内容
-    this.time = setInterval(async () => {
-      this.$store.dispatch('getMsg')
-      this.$store.dispatch('removeMsg')
-    }, 30000)
-  }
+  mounted() {}
 }
 </script>
 
