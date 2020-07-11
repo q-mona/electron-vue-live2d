@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { clickMsg } from '../assets/js/message'
+import { clickMsg, initMsg } from '../assets/js/message'
 import { live2dPath } from '../assets/js/live2dPath'
 
 const Store = window.require('electron-store')
@@ -55,6 +55,16 @@ export default {
     this.perference('showBorder', 'setShowBorder')
     this.perference('autoStart', 'setAutoStart')
     window.loadlive2d('live2d', this.$store.state.path)
+
+    // 初始化消息
+    this.$store.commit('setMsg', initMsg)
+    this.$store.commit('setFade', 1)
+    this.$store.dispatch('removeMsg')
+
+    // 固定时间获取互动内容
+    setInterval(() => {
+      this.$store.dispatch('getMsg')
+    }, 30000)
   }
 }
 </script>
