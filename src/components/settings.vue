@@ -67,7 +67,7 @@ export default {
       // 防止还未获得路径 界面就关闭
       setTimeout(() => {
         this.$store.commit('setSettings', false)
-        this.height = 140
+        // this.height = 140
       }, 1000)
     }
     // addHeight() {
