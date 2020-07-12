@@ -1,18 +1,23 @@
 <template>
   <div class="list-container shake-animate">
     <div>
+
       <div @click="change">
         <ToolItem title="切换" />
       </div>
+
       <div @click="settings">
         <ToolItem title="设置" />
       </div>
+
       <div @click="about">
         <ToolItem title="关于" />
       </div>
+
       <div @click="quit">
         <ToolItem title="退出"></ToolItem>
       </div>
+
     </div>
   </div>
 </template>

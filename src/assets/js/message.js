@@ -6,9 +6,11 @@ const clickMsg = [
   '请在「 live2d外部 」「 边框内部 」拖动我哦~~',
   '项目开始日期为「 2020-7-10 」已经过了多久了呢',
   'Tips: 可以导入本地的live2d但确保你的json文件格式一致',
-  '更多帮助请看「 https://github.com/q-mona/electron-vue-live2d 」'
+  '更多帮助请看「 https://github.com/q-mona/electron-vue-live2d 」',
+  '鼠标右键即可删除「 导入的live2d 」'
 ]
 
+// 点击关于按钮后的互动
 const about = [
   '该作者很懒 不一定有时间更新版本 =。= 会js的话可以去github下源码改改',
   '项目地址「 https://github.com/q-mona/electron-vue-live2d 」有时间去看看吧 说不定会更新呢~',

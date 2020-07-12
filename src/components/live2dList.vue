@@ -4,9 +4,11 @@
     @mouseleave="hideLive2dList"
     v-if="$store.state.isShowLive2dList"
   >
+
     <div @click="back">
       <ToolItem title="上一页" style="border-bottom:1px solid lightgray" />
     </div>
+
     <div v-for="(item, index) in data" :key="index">
       <div
         @click="change(index)"
@@ -17,9 +19,11 @@
         <ToolItem :title="item.name" v-if="index>=0&&index<end" />
       </div>
     </div>
+
     <div @click="forward">
       <ToolItem title="下一页" style="border-top:1px solid lightgray" />
     </div>
+
   </div>
 </template>
 

@@ -4,37 +4,6 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
-
-export default {
-  data() {
-    return {
-      time: '', // 定时器
-      fade: 0, // 消息框的opacity
-      msg: '' // 互动内容
-    }
-  },
-  methods: {
-    // 获得互动内容并显示消息框
-    getMsg() {
-      // v1.hitokoto.cn这网址会随机返回一条互动 不知道是谁的反正用就vans了
-      Vue.axios.get('https://v1.hitokoto.cn/').then(res => {
-        this.msg = res.data.hitokoto
-        this.fade = 1 // 消息框opacity=1
-      })
-    },
-    // 移除消息框
-    removeMsg() {
-      setTimeout(() => {
-        this.fade = 0 // 消息框opacity=0
-      }, 5000)
-    }
-  },
-  mounted() {}
-}
-</script>
-
 <style scoped>
 .message {
   width: 280px;

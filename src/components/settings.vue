@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div>
+    <!-- <div>
       <p class="uploadP" @click="addHeight">导入live2d</p>
       <div>
         <el-input type="text" placeholder="昵称" v-model="name" maxlength="10" show-word-limit></el-input>
@@ -32,7 +32,8 @@
           <input type="file" id="upload" multiple="multiple" @change="getURL" accept=".json" />
         </a>
       </div>
-    </div>
+    </div> -->
+
   </div>
 </template>
 
@@ -43,8 +44,8 @@ const { ipcRenderer } = window.require('electron')
 export default {
   data() {
     return {
-      name: '',
-      height: 140 // 界面长度
+      name: '', // 输入的昵称
+      height: 100 // 界面长度
     }
   },
   methods: {
@@ -69,41 +70,42 @@ export default {
         this.$store.commit('setSettings', false)
         this.height = 140
       }, 1000)
-    },
-    addHeight() {
-      this.height = 204
-    },
-    // 获得需要导入文件的路径
-    getURL() {
-      if (this.name === '') {
-        this.$store.commit('setMsg', '好歹给人起个名字啊')
-        this.$store.commit('setFade', 1)
-        this.$store.dispatch('removeMsg')
-      } else {
-        const files = document.getElementById('upload').files[0]
-        // 获取导入的live2d资源
-        const obj = {
-          name: this.name,
-          path: files.path
-        }
-        // 添加至vuex
-        this.$store.commit('addSum', obj)
-        // 存入缓存
-        const src = store.get('live2dSource')
-        if (src) {
-          src.push(obj)
-          store.set('live2dSource', src)
-        } else {
-          store.set('live2dSource', [obj])
-        }
-
-        this.$store.commit('setMsg', '滋滋滋~~ 导入成功')
-        this.$store.commit('setFade', 1)
-        this.$store.dispatch('removeMsg')
-
-        ipcRenderer.send('win-reload')
-      }
     }
+    // electron读取本地文件未实现完全
+    // addHeight() {
+    //   this.height = 204
+    // }
+    // 获得需要导入文件的路径
+    // getURL() {
+    //   if (this.name === '') {
+    //     this.$store.commit('setMsg', '好歹给人起个名字啊')
+    //     this.$store.commit('setFade', 1)
+    //     this.$store.dispatch('removeMsg')
+    //   } else {
+    //     const files = document.getElementById('upload').files[0]
+    //     // 获取导入的live2d资源路径
+    //     const obj = {
+    //       name: this.name,
+    //       path: files.path
+    //     }
+    //     // 添加至vuex
+    //     this.$store.commit('addSum', obj)
+    //     // 存入缓存
+    //     const src = store.get('live2dSource')
+    //     if (src) {
+    //       src.push(obj)
+    //       store.set('live2dSource', src)
+    //     } else {
+    //       store.set('live2dSource', [obj])
+    //     }
+
+    //     this.$store.commit('setMsg', '滋滋滋~~ 导入成功')
+    //     this.$store.commit('setFade', 1)
+    //     this.$store.dispatch('removeMsg')
+
+    //     ipcRenderer.send('win-reload')
+    //   }
+    // }
   }
 }
 </script>
@@ -130,7 +132,8 @@ export default {
 .uploadP {
   cursor: pointer;
   border: 1px solid lightgray;
-  width: 100%;
+  width: 80px;
+  margin: 14px auto;
   text-align: center;
 }
 .file {

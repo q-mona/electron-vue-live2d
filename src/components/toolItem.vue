@@ -4,8 +4,7 @@
 
 <script>
 export default {
-  props: ['title'],
-  methods: {}
+  props: ['title']
 }
 </script>
 

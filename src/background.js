@@ -4,7 +4,7 @@ import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 // import path from 'path'
-
+const { shell } = require('electron')
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -28,7 +28,9 @@ function createWindow() {
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       // nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
       nodeIntegration: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      webSecurity: false,
+      plugins: true
     }
   })
 
@@ -93,7 +95,9 @@ ipcMain.on('auto-start', (e, val) => {
 })
 
 ipcMain.on('win-reload', () => {
-  win.reload()
+  // win.reload()
+  const content = shell.openItem('D:/workplace/electron-vue-live2d/dist_electron/win-unpacked/resources/public/live2d/live2d-widget-model-chitose/assets/chitose.model.json')
+  console.log(content)
 })
 
 // 退出live2d

@@ -10,7 +10,7 @@ export default new Vuex.Store({
     msg: '', // 互动内容
     fade: 0, // 消息框style的opacity值
     sum: [], // live2d的全部模型路径
-    path: 'live2d/live2d-widget-model-plt/assets/miku.model.json', // live2d路径
+    path: 'live2d/live2d-widget-model-plt/assets/plt.model.json', // live2d路径 如果没有缓存则优先此路径
     width: 300, // live2d的宽(canvas)
     height: 600, // live2d的高(canvas)
     showBorder: false, // 显示边框
@@ -56,7 +56,7 @@ export default new Vuex.Store({
   },
   actions: {
     // 获得互动内容并显示消息框
-    getMsg({ state, commit, dispatch }) {
+    getMsg({ commit, dispatch }) {
       // v1.hitokoto.cn这网址会随机返回一条互动 不知道是谁的反正用就vans了
       Vue.axios.get('https://v1.hitokoto.cn/').then(res => {
         commit('setMsg', res.data.hitokoto)
@@ -72,7 +72,5 @@ export default new Vuex.Store({
         commit('setFade', 0)
       }, 5000);
     }
-  },
-  modules: {
   }
 })

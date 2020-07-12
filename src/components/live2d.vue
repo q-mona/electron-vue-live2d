@@ -30,6 +30,7 @@ export default {
       this.$store.commit('setFade', 1)
       this.$store.dispatch('removeMsg')
     },
+    // 从缓存中设置vuex
     perference(key, func) {
       const val = store.get(key)
       if (val) {
@@ -56,7 +57,7 @@ export default {
     this.perference('autoStart', 'setAutoStart')
     window.loadlive2d('live2d', this.$store.state.path)
 
-    // 初始化消息
+    // 初始化开场白
     this.$store.commit('setMsg', initMsg)
     this.$store.commit('setFade', 1)
     this.$store.dispatch('removeMsg')
@@ -64,7 +65,7 @@ export default {
     // 固定时间获取互动内容
     setInterval(() => {
       this.$store.dispatch('getMsg')
-    }, 6000)
+    }, 30000)
   }
 }
 </script>
