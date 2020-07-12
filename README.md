@@ -73,5 +73,5 @@ npm run electron:build
 
 ```
 ##### 删除
-1.将public/live2d的资源删除
+1.将public/live2d的资源删除   
 2.再asserts/js/liv2dPath.js中的信息删除
