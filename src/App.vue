@@ -55,17 +55,18 @@ export default {
 html {
   -webkit-app-region: drag;
 }
+.border:hover {
+  border: 1px solid lightsalmon;
+  border-radius: 10px;
+  box-shadow: 0 0 6px lightsalmon, 0 0 10px lightsalmon inset;
+}
 .shake-animate {
   animation-duration: 50s;
   animation-iteration-count: infinite;
   animation-name: shake;
   animation-timing-function: ease-in-out;
 }
-.border:hover {
-  border: 1px solid lightsalmon;
-  border-radius: 10px;
-  box-shadow: 0 0 6px lightsalmon, 0 0 10px lightsalmon inset;
-}
+
 @keyframes shake {
   2% {
     transform: translate(0.5px, -1.5px) rotate(-0.5deg);
