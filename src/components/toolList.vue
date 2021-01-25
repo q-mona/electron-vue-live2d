@@ -1,5 +1,9 @@
 <template>
-  <div class="list-container shake-animate">
+  <div
+    class="list-container shake-animate no-drag"
+    :style="{ opacity: listStyle.opacity }"
+    @mouseleave="listFade"
+  >
     <div>
       <div @click="change">
         <ToolItem title="切换" />
@@ -8,64 +12,59 @@
         <ToolItem title="设置" />
       </div>
       <div @click="about">
-        <ToolItem title="关于" />
+        <ToolItem title="工具">
+          <setAudio />
+        </ToolItem>
       </div>
       <div @click="quit">
-        <ToolItem title="退出"></ToolItem>
+        <ToolItem title="退出" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { onMounted, reactive } from 'vue'
 import ToolItem from './toolItem'
-import { about } from '../assets/js/message'
+import emitter from '../utils/emitter'
+import setAudio from '../components/setAudio'
 const { ipcRenderer } = window.require('electron')
 export default {
-  data() {
-    return {
-      num: 0
+  setup() {
+    const listStyle = reactive({
+      opacity: 0,
+    })
+    const listFade = () => {
+      listStyle.opacity = 0
     }
-  },
-  methods: {
-    // 更换live2d
-    change() {
-      this.$store.commit('setLive2dList', true)
-    },
-    // 显示设置界面
-    settings() {
-      this.$store.commit('setSettings', true)
-    },
-    about() {
-      // 设置随机一条互动信息
-      this.$store.commit(
-        'setMsg',
-        about[Math.round(Math.random() * (about.length - 1))]
-      )
-      this.$store.commit('setFade', 1)
-      this.$store.dispatch('removeMsg')
-    },
-    // 退出
-    quit() {
+    const quit = () => {
       ipcRenderer.send('win-close')
+    }
+    onMounted(() => {
+      emitter.on('setOpacity', () => {
+        listStyle.opacity = 1
+      })
+    })
+    return {
+      listStyle,
+      listFade,
+      quit,
     }
   },
   components: {
-    ToolItem
-  }
+    ToolItem,
+    setAudio,
+  },
 }
 </script>
 
 <style scoped>
 .list-container {
-  position: absolute;
-  top: 50%;
-  right: 120px;
+  position: relative;
   background: white;
   border: 1px solid gainsboro;
   border-radius: 6px;
   overflow: hidden;
-  -webkit-app-region: no-drag;
-  z-index: 2;
+  transition: opacity 1s;
 }
 </style>

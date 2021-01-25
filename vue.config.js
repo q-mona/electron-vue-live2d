@@ -2,11 +2,11 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        productName: 'electron-vue-live2d',
+        productName: 'electron-vue3-live2d',
         nsis: {
-          installerIcon: 'D:/workplace/electron-vue-live2d/public/favicon.ico',
-          installerHeader: 'D:/workplace/electron-vue-live2d/public/favicon.ico',
-          installerHeaderIcon: 'D:/workplace/electron-vue-live2d/public/favicon.ico',
+          installerIcon: './public/favicon.ico',
+          installerHeader: './public/favicon.ico',
+          installerHeaderIcon: './public/favicon.ico',
           oneClick: false,
           allowToChangeInstallationDirectory: true
         },

@@ -1,22 +1,25 @@
 <template>
-  <div class="item-container">{{title}}</div>
+  <div class="item-container">
+    {{ title }}
+    <slot></slot>
+  </div>
 </template>
 
 <script>
 export default {
   props: ['title'],
-  methods: {}
+  methods: {},
 }
 </script>
 
 <style scoped>
 .item-container {
+  position: relative;
   font-size: 14px;
   padding: 4px 8px;
-  -webkit-app-region: no-drag;
 }
 .item-container:hover {
-  background: lightblue;
+  background: rgba(153, 243, 255, 0.8);
   cursor: pointer;
 }
 </style>
