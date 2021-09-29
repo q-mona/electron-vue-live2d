@@ -33,7 +33,7 @@ npm install // 安装依赖
 npm run electron:serve // 编译项目
 npm run electron:build // 打包项目
 ```
-如果运行遇到问题可以看我的electron踩坑笔记: [地址]()
+如果运行遇到问题可以看我的electron踩坑笔记: [地址](https://www.bilibili.com/read/cv13384411?spm_id_from=444.41.0.0)
 
 
 
