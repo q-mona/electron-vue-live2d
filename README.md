@@ -20,8 +20,9 @@
 
 4. **删除live2d**直接删除 **项目路径/resourses/app/live2d/** 中对应的文件即可  
 
-5. 如果你有多个live2d资源  
-   可以直接把live2d文件夹复制到 **项目路径/resourses/app/live2d/**   
+5. 如果你有多个live2d资源 可以直接把live2d文件夹复制到 **项目路径/resourses/app/live2d/**   
+
+6. 如需拖动live2d**请按住边缘拖动**，否则动不了 
 
 详细信息可去看我的专栏: [地址]()
 
