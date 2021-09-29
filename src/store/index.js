@@ -1,80 +1,76 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
+import axios from 'axios'
 
-Vue.use(Vuex)
 
-let time = '' // 判断setTimeOut是否存在
+let time = '' // 定时器
 
-export default new Vuex.Store({
+export default createStore({
   state: {
-    msg: '', // 互动内容
-    fade: 0, // 消息框style的opacity值
-    sum: [], // live2d的全部模型路径
-    path: 'live2d/live2d-widget-model-plt/assets/miku.model.json', // live2d路径
-    width: 300, // live2d的宽(canvas)
-    height: 600, // live2d的高(canvas)
-    showBorder: false, // 显示边框
-    isShowLive2dList: false, // 显示live2d列表
-    isShowSettings: false, // 显示settings列表
-    autoStart: false // 设置开机自启
+    // 当前live2d信息
+    live2d: {
+      name: "",
+      path: "",
+      type: "", // moc或moc3
+    },
+    // 消息框信息
+    message: {
+      content: "",
+      opacity: 0
+    },
+    // 程序信息
+    config: {
+      width: 300,
+      height: 400,
+      showBorder: true,
+      autoStart: false
+    },
+    // 此处为总面版、设置列表和live2d列表的透明度 值为0到1
+    opacity: {
+      live2d: 0,
+      config: 0,
+      main: 0
+    }
   },
   mutations: {
-    // 设置互动内容
-    setMsg(state, payload) {
-      state.msg = payload
+    setLive2d(state, data) {
+      for (let key in data) {
+        state.live2d[key] = data[key]
+      }
     },
-    // 设置消息框opacity
-    setFade(state, payload) {
-      state.fade = payload
+    setOpacity(state, data) {
+      for (let key in data) {
+        state.opacity[key] = data[key]
+      }
     },
-    // 切换live2d
-    setPath(state, payload) {
-      state.path = payload
+    setMsg(state, data) {
+      for (let key in data) {
+        state.message[key] = data[key]
+      }
     },
-    // 设置边框显示
-    setShowBorder(state, payload) {
-      state.showBorder = payload
-    },
-    // 设置开机自启
-    setAutoStart(state, payload) {
-      state.autoStart = payload
-    },
-    // 设置live2d列表显示或隐藏
-    setLive2dList(state, payload) {
-      state.isShowLive2dList = payload
-    },
-    // 设置设置界面显示或隐藏
-    setSettings(state, payload) {
-      state.isShowSettings = payload
-    },
-    setSum(state, payload) {
-      state.sum = payload
-    },
-    addSum(state, payload) {
-      state.sum.push(payload)
+    setConfig(state, data) {
+      for (let key in data) {
+        state.config[key] = data[key]
+      }
     }
   },
   actions: {
     // 获得互动内容并显示消息框
-    getMsg({ state, commit, dispatch }) {
-      // v1.hitokoto.cn这网址会随机返回一条互动 不知道是谁的反正用就vans了
-      Vue.axios.get('https://v1.hitokoto.cn/').then(res => {
-        commit('setMsg', res.data.hitokoto)
-        commit('setFade', 1) // 消息框opacity=1
+    getMsg({ commit, dispatch }) {
+      // v1.hitokoto.cn这网址会随机返回一条互动
+      axios.get('https://v1.hitokoto.cn/').then(res => {
+        commit('setMsg', { content: res.data.hitokoto, opacity: 1 })
         dispatch('removeMsg')
-      }).catch(error => {
-        console.log(error)
-        commit('setMsg', '网络似乎被吃了=。= 你的问题还是我的问题呢？')
-        commit('setFade', 1) // 消息框opacity=1
+      }).catch(() => {
+        commit('setMsg', { content: '糟了似乎出现了奇怪的问题，是你的问题还是我的问题呢？', opacity: 1 })
         dispatch('removeMsg')
       })
     },
     // 移除消息框
-    removeMsg({ state, commit }) {
+    removeMsg({ commit }) {
       // 防止重复触发setTimeOut
       clearTimeout(time)
       time = setTimeout(() => {
-        commit('setFade', 0)
+        commit('setMsg', { opacity: 0 })
       }, 5000);
     }
   },

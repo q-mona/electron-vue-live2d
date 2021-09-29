@@ -1,22 +1,28 @@
 <template>
-  <div class="item-container">{{title}}</div>
+  <div class="item-container">{{ props.title }}</div>
 </template>
 
 <script>
 export default {
-  props: ['title'],
-  methods: {}
-}
+  props:{
+    title: String
+  },
+  setup(props) {
+    return {
+      props,
+    };
+  },
+};
 </script>
 
 <style scoped>
 .item-container {
   font-size: 14px;
   padding: 4px 8px;
-  -webkit-app-region: no-drag;
+  color: #505050;
 }
 .item-container:hover {
-  background: lightblue;
+  background: #2db7f5;
   cursor: pointer;
 }
 </style>

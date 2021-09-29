@@ -1,24 +1,16 @@
 module.exports = {
   pluginOptions: {
     electronBuilder: {
+      nodeIntegration: true,
       builderOptions: {
-        productName: 'electron-vue-live2d',
+        productName: 'live2d-pc',
+        asar: false,
         nsis: {
-          installerIcon: 'D:/workplace/electron-vue-live2d/public/favicon.ico',
-          installerHeader: 'D:/workplace/electron-vue-live2d/public/favicon.ico',
-          installerHeaderIcon: 'D:/workplace/electron-vue-live2d/public/favicon.ico',
           oneClick: false,
           allowToChangeInstallationDirectory: true
         },
-        extraResources: ['public/'],
-        mac: {
-          icon: '/public/favicon.ico'
-        },
         win: {
-          icon: '/public/favicon.ico'
-        },
-        linux: {
-          icon: '/public/favicon.ico'
+          icon: "D:/workplace/electron-vue3-live2d/public/favicon.ico"
         }
       }
     }
