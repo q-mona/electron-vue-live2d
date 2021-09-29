@@ -1,9 +1,10 @@
 ## electron-vue3-live2d
 此项目为用vue3、electron实现的桌面看板娘  
-**本项目包含的live2d文件仅供学习使用请勿用于商业**
+**本项目包含的live2d文件仅供学习使用请勿用于商业**   
+项目安装包：[百度云]()  
+
 ## 效果预览
 ![](https://cdn.jsdelivr.net/gh/q-mona/mona@latest/images/electron-live2d.gif)
-项目安装包：[百度云]()
 
 ## 使用注意
 1. live2d列表的名称与你导入的文件夹名称一致     
