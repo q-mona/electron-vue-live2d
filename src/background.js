@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, screen } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import path from 'path'
@@ -15,12 +15,15 @@ let win = ''
 async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
+    x: screen.getPrimaryDisplay().workAreaSize.width - 450,
+    y: screen.getPrimaryDisplay().workAreaSize.height - 450,
     frame: false,
     transparent: true,
-    width: 380,
-    height: 480,
+    width: 475,
+    height: 475,
     webPreferences: {
       // devTools: false,
+      enableRemoteModule: true,
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
@@ -37,6 +40,8 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+  // 层级置顶
+  win.setAlwaysOnTop(true)
 }
 
 // Quit when all windows are closed.
@@ -114,4 +119,9 @@ ipcMain.on('auto-start', (e, val) => {
 // 修改程序宽高
 ipcMain.on('resize', (e, val) => {
   win.setContentSize(val.width, val.height)
+})
+// 重启
+ipcMain.on('reload', (e, val) => {
+  app.relaunch()
+  app.quit()
 })

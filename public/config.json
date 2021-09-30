@@ -1,1 +1,1 @@
-{"live2d":{"name":"血小板","path":"live2d/血小板/血小板.model.json","type":"moc"},"message":{"content":"每个人的心里，都有一个忘不记，却无法拥抱珍惜的人。","opacity":1},"config":{"width":575,"height":575,"showBorder":true,"autoStart":false}}
+{"live2d":{"name":"血小板","path":"live2d/血小板/血小板.model.json","type":"moc","voices":[]},"message":{"content":"有疑问可去项目地址(玩坏了就重装=。=)\nhttps://github.com/q-mona/electron-vue-live2d（ctrl c+v）","opacity":1},"config":{"width":350,"height":350,"scale":1,"showBorder":true,"autoStart":false},"start":0}

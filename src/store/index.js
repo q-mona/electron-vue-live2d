@@ -8,9 +8,10 @@ export default createStore({
   state: {
     // 当前live2d信息
     live2d: {
-      name: "",
-      path: "",
-      type: "", // moc或moc3
+      name: "血小板",
+      path: "live2d/血小板/血小板.model.json",
+      type: "moc", // moc或moc3
+      voices: []
     },
     // 消息框信息
     message: {
@@ -21,6 +22,7 @@ export default createStore({
     config: {
       width: 300,
       height: 400,
+      scale: 1,
       showBorder: true,
       autoStart: false
     },
@@ -29,13 +31,18 @@ export default createStore({
       live2d: 0,
       config: 0,
       main: 0
-    }
+    },
+    // 当前的live2d列表头
+    start: 0
   },
   mutations: {
     setLive2d(state, data) {
       for (let key in data) {
         state.live2d[key] = data[key]
       }
+    },
+    setPage(state, data) {
+      state.start = data
     },
     setOpacity(state, data) {
       for (let key in data) {

@@ -24,6 +24,16 @@
         :min="300"
       />
     </div>
+    <div class="cfg-item-container">
+      <span>缩放：</span>
+      <a-slider
+        style="width: 200px"
+        v-model:value="config.scale"
+        :step="0.1"
+        :max="2"
+        :min="0.5"
+      />
+    </div>
 
     <div class="cfg-item-container">
       <div>
@@ -70,8 +80,9 @@ export default {
   setup() {
     const store = useStore();
     const config = reactive({
-      width: 300,
-      height: 400,
+      width: 475,
+      height: 475,
+      scale: 1,
       showBorder: true,
       autoStart: false,
     });
@@ -80,31 +91,34 @@ export default {
 
       ipcRenderer.send("auto-start", config.autoStart);
       ipcRenderer.send("resize", {
-        width: config.width + 80,
+        width: config.width + 40,
         height: config.height + 80,
       });
 
-      if (store.state.live2d.type == "moc3") {
-        let live2d = document.querySelector("#moc3");
-        if (live2d.childNodes.length > 0)
-          live2d.removeChild(live2d.childNodes[0]);
+      let live2d = document.querySelector("#moc3");
+      if (live2d.childNodes.length > 0)
+        live2d.removeChild(live2d.childNodes[0]);
+      let ctn = document.querySelector("#moc-ctn");
+      if (ctn.childNodes.length > 0) ctn.removeChild(ctn.childNodes[0]);
 
+      if (store.state.live2d.type == "moc3") {
         window.l2dViewer({
-          el: document.querySelector("#moc3"),
+          el: live2d,
           basePath: "live2d",
           modelName: store.state.live2d.name,
           width: config.width,
           height: config.height,
+          sounds: store.state.live2d.voices
         });
+        live2d.childNodes[0].style.transform = `scale(${config.scale})`
       } else {
-        let ctn = document.querySelector("#moc-ctn");
-        if (ctn.childNodes.length > 0) ctn.removeChild(ctn.childNodes[0]);
         let canvas = document.createElement("canvas");
         canvas.setAttribute("id", "moc");
         canvas.width = config.width;
         canvas.height = config.height;
         ctn.appendChild(canvas);
         window.loadlive2d("moc", store.state.live2d.path);
+        canvas.style.transform = `scale(${config.scale})`
       }
     };
     const reset = () => {
@@ -117,6 +131,7 @@ export default {
       store.commit("setOpacity", { config: 0 });
     };
     onMounted(() => {
+      console.log(__dirname)
       // 获得配置文件
       let configPath = path.join(
         ipcRenderer.sendSync("getPublicPath"),
@@ -126,10 +141,12 @@ export default {
       let data = fs.readFileSync(configPath);
       data = JSON.parse(data);
 
-      // 初始化配置
+      // 初始化配置 
       store.commit("setLive2d", data.live2d);
       store.commit("setMsg", data.message);
       store.commit("setConfig", data.config);
+      store.commit("setPage", data.start);
+
       for (let key in store.state.config) {
         config[key] = store.state.config[key];
       }
@@ -160,7 +177,7 @@ export default {
   width: 300px;
   padding: 20px 20px;
   position: absolute;
-  right: 20px;
+  left: 20px;
   bottom: 50px;
   background: white;
   border: 1px solid gainsboro;

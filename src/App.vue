@@ -1,9 +1,9 @@
 <template>
-  <div :class="showBorder ? 'border' : ''" style="width: 100vw; height: 100vh">
+  <div :class="showBorder ? 'border' : ''" class="app-container">
     <!-- 消息框 -->
     <Message />
     <!--live2d-->
-    <Live2d @click="showMainList" @mouseenter="showMainList" />
+    <Live2d @click="showMainList" />
     <!--主面板-->
     <ToolList />
   </div>
@@ -43,6 +43,15 @@ html {
 body {
   background: #ffffff00;
 }
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .shake {
   animation-duration: 10s;
   animation-iteration-count: infinite;

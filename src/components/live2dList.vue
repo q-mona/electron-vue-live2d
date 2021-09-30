@@ -11,7 +11,7 @@
       />
     </div>
     <div v-for="(item, index) in live2dList" :key="index">
-      <div v-if="index >= page.start && index < page.end">
+      <div v-if="index >= page.start && index < page.start + page.step">
         <ToolItem
           :title="item"
           @click="changeLive2d(item)"
@@ -40,23 +40,21 @@ export default {
     const store = useStore();
     // 仅显示(start, end)区间的live2d
     const page = reactive({
-      start: 0,
-      end: 5,
+      start: computed(() => store.state.start),
       total: 0, // live2d个数
-      step: 5, // 每次显示step个live2d
+      step: 8, // 每次显示step个live2d
     });
+
     // 上一页
     const back = () => {
-      if (page.start != 0) {
-        page.start -= page.step;
-        page.end -= page.step;
-      }
+      if (page.start - page.step >= 0) {
+        store.commit("setPage", page.start - page.step);
+      } else store.commit("setPage", 0);
     };
     // 下一页
     const forward = () => {
-      if (page.end < page.total) {
-        page.start += page.step;
-        page.end += page.step;
+      if (page.start + page.step < page.total) {
+        store.commit("setPage", page.start + page.step);
       }
     };
 
@@ -70,43 +68,43 @@ export default {
     // 切换live2d
     const changeLive2d = (name) => {
       let live2dPath = path.join(publicPath.value, name);
-      fs.readdir(live2dPath, (error, data) => {
-        data.forEach((item) => {
-          let jsonPath = path.join("live2d", name, item).replaceAll("\\", "/");
-          if (item.indexOf("model.json") != -1) {
-            store.commit("setLive2d", {
-              path: jsonPath,
-              type: "moc",
-              name: name,
-            });
-            let ctn = document.querySelector("#moc-ctn");
-            if (ctn.childNodes.length > 0) ctn.removeChild(ctn.childNodes[0]);
-            let canvas = document.createElement("canvas");
-            canvas.setAttribute("id", "moc");
-            canvas.width = store.state.config.width;
-            canvas.height = store.state.config.height;
-            ctn.appendChild(canvas);
-            window.loadlive2d("moc", jsonPath);
-          } else if (item.indexOf("model3.json") != -1) {
-            store.commit("setLive2d", {
-              path: jsonPath,
-              type: "moc3",
-              name: name,
-            });
-            let live2d = document.querySelector("#moc3");
-            if (live2d.childNodes.length > 0)
-              live2d.removeChild(live2d.childNodes[0]);
-
-            window.l2dViewer({
-              el: document.querySelector("#moc3"),
-              basePath: "live2d",
-              modelName: name,
-              width: store.state.config.width,
-              height: store.state.config.height,
-            });
+      // 读取live2d
+      let live2dData = { voices: [] };
+      const data = fs.readdirSync(live2dPath);
+      data.forEach((item) => {
+        let jsonPath = path.join("live2d", name, item).replaceAll("\\", "/");
+        if (item.indexOf("model.json") != -1) {
+          live2dData.path = jsonPath;
+          live2dData.type = "moc";
+          live2dData.name = name;
+        } else if (item.indexOf("model3.json") != -1) {
+          live2dData.path = jsonPath;
+          live2dData.type = "moc3";
+          live2dData.name = name;
+        } else if (item.indexOf("voice") != -1) {
+          const voices = fs.readdirSync(path.join(live2dPath, item));
+          for (let i = 0; i < voices.length; i++) {
+            voices[i] = item + "/" + voices[i];
           }
-        });
+          live2dData.voices = voices;
+        }
       });
+
+      // 保存配置
+      const config = {
+        live2d: live2dData,
+        message: store.state.message,
+        config: store.state.config,
+        start: store.state.start,
+      };
+      let configPath = path.join(
+        ipcRenderer.sendSync("getPublicPath"),
+        "..",
+        "config.json"
+      );
+ 
+      fs.writeFileSync(configPath, JSON.stringify(config));
+      ipcRenderer.send("reload");
     };
     onMounted(() => {
       // 获得静态资源文件夹的绝对路径
@@ -143,7 +141,7 @@ export default {
   overflow: hidden;
   -webkit-app-region: no-drag;
   text-align: center;
-  right: 20px;
+  left: 20px;
   bottom: 50px;
   transition: opacity 0.5s;
 }

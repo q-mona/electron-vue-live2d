@@ -44,6 +44,7 @@ export default {
         let flag = await isExist(dest);
         if (!flag) copy(filePath, dest);
         else console.log("模型已存在");
+        ipcRenderer.send("reload");
       }
     };
     return {

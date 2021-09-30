@@ -8,11 +8,17 @@
       <div @click="change">
         <ToolItem title="切换" />
       </div>
+      <div @click="gobang">
+        <ToolItem title="游戏" />
+      </div>
       <div @click="config">
         <ToolItem title="设置" />
       </div>
       <div @click="importLive2d">
         <ToolItem title="导入" />
+      </div>
+      <div @click="about">
+        <ToolItem title="关于" />
       </div>
       <div @click="quit">
         <ToolItem title="退出" />
@@ -35,12 +41,22 @@ import { useStore } from "vuex";
 import { computed } from "vue";
 import fs from "fs";
 import path from "path";
+const BrowserWindow = window.require("electron").remote.BrowserWindow;
 export default {
   setup() {
     const store = useStore();
     // 用js点击upload组件 导入live2d文件
     const importLive2d = () => {
       document.querySelector("#upload").click();
+    };
+    const about = () => {
+      const content =
+        "有疑问可去项目地址(玩坏了就重装=。=)\nhttps://github.com/q-mona/electron-vue-live2d（ctrl c+v）";
+      store.commit("setMsg", {
+        content: content,
+        opacity: 1,
+      });
+      store.dispatch("removeMsg");
     };
     // 退出程序
     const quit = () => {
@@ -49,6 +65,7 @@ export default {
         live2d: store.state.live2d,
         message: store.state.message,
         config: store.state.config,
+        start: store.state.start,
       };
       let configPath = path.join(
         ipcRenderer.sendSync("getPublicPath"),
@@ -70,12 +87,23 @@ export default {
     const hidden = () => {
       store.commit("setOpacity", { main: 0 });
     };
+    // 五子棋
+    const gobang = () => {
+      const gobangPath = ipcRenderer.sendSync("getPublicPath");
+      let win = new BrowserWindow({ width: 600, height: 620 });
+      win.on("close", () => {
+        win = null;
+      });
+      win.loadFile(path.join(gobangPath, "..", "/gobang/index.html"));
+    };
     return {
       importLive2d,
       quit,
       change,
       hidden,
       config,
+      about,
+      gobang,
       opacity: computed(() => store.state.opacity.main),
     };
   },
@@ -91,7 +119,7 @@ export default {
 <style scoped>
 .list-container {
   position: absolute;
-  right: 20px;
+  left: 20px;
   bottom: 50px;
   background: white;
   border: 1px solid gainsboro;

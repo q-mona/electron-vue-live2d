@@ -1,0 +1,12 @@
+canvas {
+    display: block;
+    margin: 50px auto;
+}
+
+p {
+    padding: 0 0;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

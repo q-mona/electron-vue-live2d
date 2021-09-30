@@ -1,7 +1,7 @@
 <template>
   <div
     class="shake message"
-    :style="{ opacity: msg.opacity, left: left + 'px' }"
+    :style="{ opacity: msg.opacity, 'z-index': msg.opacity == 0 ? -1 : 3 }"
   >
     <p>{{ msg.content }}</p>
   </div>
@@ -15,11 +15,10 @@ export default {
     onMounted(() => {
       setInterval(() => {
         store.dispatch("getMsg");
-      }, 60000);
+      }, 50000);
     });
     return {
       msg: computed(() => store.state.message),
-      left: computed(() => store.state.config.width / 2 - 100),
     };
   },
 };
@@ -29,7 +28,9 @@ export default {
 .message {
   padding: 10px 10px;
   width: 280px;
-  top: 20px;
+  right: 20px;
+  top: 50%;
+  transform: translate(-50%, 0);
   height: auto;
   text-align: center;
   border: 1px solid rgba(255, 137, 255, 0.4);
@@ -40,7 +41,7 @@ export default {
     0 3px 15px 2px rgba(255, 137, 255, 0.4) inset;
   text-overflow: ellipsis;
   position: absolute;
-  transition: opacity 1s;
+  transition: opacity 0.5s;
   z-index: 2;
   -webkit-app-region: no-drag;
 }
