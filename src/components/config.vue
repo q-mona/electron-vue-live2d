@@ -131,7 +131,6 @@ export default {
       store.commit("setOpacity", { config: 0 });
     };
     onMounted(() => {
-      console.log(__dirname)
       // 获得配置文件
       let configPath = path.join(
         ipcRenderer.sendSync("getPublicPath"),

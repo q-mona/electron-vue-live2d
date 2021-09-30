@@ -15,6 +15,7 @@
         <ToolItem
           :title="item"
           @click="changeLive2d(item)"
+          @contextmenu.prevent="removeLive2d(item)"
           :style="{ color: item == cur ? 'red' : '' }"
         />
       </div>
@@ -64,7 +65,23 @@ export default {
     const hidden = () => {
       store.commit("setOpacity", { live2d: 0 });
     };
+    // 右键删除live2d
+    const removeLive2d = (name) => {
+      if (name == store.state.live2d.name) return;
+      let live2dPath = path.join(publicPath.value, name);
+      delDir(live2dPath);
+      ipcRenderer.sendSync("reload");
+    };
+    const delDir = (live2dPath) => {
+      let files = fs.readdirSync(live2dPath);
 
+      files.forEach((file) => {
+        let curPath = path.join(live2dPath, file);
+        if (fs.statSync(curPath).isDirectory()) delDir(curPath);
+        else fs.unlinkSync(curPath);
+      });
+      fs.rmdirSync(live2dPath);
+    };
     // 切换live2d
     const changeLive2d = (name) => {
       let live2dPath = path.join(publicPath.value, name);
@@ -102,7 +119,7 @@ export default {
         "..",
         "config.json"
       );
- 
+
       fs.writeFileSync(configPath, JSON.stringify(config));
       ipcRenderer.send("reload");
     };
@@ -124,6 +141,7 @@ export default {
       hidden,
       back,
       forward,
+      removeLive2d,
     };
   },
   components: {

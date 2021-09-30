@@ -1,1 +1,1 @@
-{"live2d":{"name":"血小板","path":"live2d/血小板/血小板.model.json","type":"moc","voices":[]},"message":{"content":"有疑问可去项目地址(玩坏了就重装=。=)\nhttps://github.com/q-mona/electron-vue-live2d（ctrl c+v）","opacity":1},"config":{"width":350,"height":350,"scale":1,"showBorder":true,"autoStart":false},"start":0}
+{"live2d":{"voices":[],"path":"live2d/c453_01/model.json","type":"moc","name":"c453_01"},"message":{"content":"我有故人抱剑去，斩尽春风未曾归。","opacity":0},"config":{"width":350,"height":350,"scale":1,"showBorder":true,"autoStart":false},"start":0}
