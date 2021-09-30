@@ -11,11 +11,11 @@
       <div @click="gobang">
         <ToolItem title="游戏" />
       </div>
-      <div @click="config">
-        <ToolItem title="设置" />
-      </div>
       <div @click="importLive2d">
         <ToolItem title="导入" />
+      </div>
+      <div @click="config">
+        <ToolItem title="设置" />
       </div>
       <div @click="about">
         <ToolItem title="关于" />
