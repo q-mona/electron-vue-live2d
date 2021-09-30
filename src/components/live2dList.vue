@@ -42,7 +42,6 @@ export default {
     // 仅显示(start, end)区间的live2d
     const page = reactive({
       start: computed(() => store.state.start),
-      total: 0, // live2d个数
       step: 8, // 每次显示step个live2d
     });
 
@@ -54,7 +53,7 @@ export default {
     };
     // 下一页
     const forward = () => {
-      if (page.start + page.step < page.total) {
+      if (page.start + page.step < live2dList.value.length) {
         store.commit("setPage", page.start + page.step);
       }
     };
@@ -68,9 +67,11 @@ export default {
     // 右键删除live2d
     const removeLive2d = (name) => {
       if (name == store.state.live2d.name) return;
+      for (let i = page.start; i < live2dList.value.length; i++) {
+        if (live2dList.value[i] == name) live2dList.value.splice(i, 1);
+      }
       let live2dPath = path.join(publicPath.value, name);
       delDir(live2dPath);
-      ipcRenderer.sendSync("reload");
     };
     const delDir = (live2dPath) => {
       let files = fs.readdirSync(live2dPath);
@@ -129,7 +130,6 @@ export default {
       // 获得live2d资源列表
       fs.readdir(publicPath.value, (error, data) => {
         live2dList.value = data;
-        page.total = data.length;
       });
     });
     return {
