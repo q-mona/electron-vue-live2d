@@ -9,9 +9,9 @@ module.exports = {
           oneClick: false,
           allowToChangeInstallationDirectory: true
         },
-        win: {
-          icon: "D:/workplace/electron-vue3-live2d/public/favicon.ico"
-        }
+        // win: {
+        //   icon: "D:/workplace/electron-vue3-live2d/public/favicon.ico"
+        // }
       }
     }
   }
