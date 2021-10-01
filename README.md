@@ -2,31 +2,6 @@
 此项目为用vue3、electron实现的桌面看板娘  
 **本项目包含的live2d文件仅供学习使用请勿用于商业**   
 项目安装包：[百度云](https://pan.baidu.com/s/1qJBUWFbB0aY_04fEsS1Skw ) 提取码: 05fg
-
-## 效果预览
-![](https://raw.githubusercontent.com/q-mona/mona/master/images/vue3-live2d.png)
-
-## 使用注意
-1. live2d列表的名称与你导入的文件夹名称一致     
-   如果要修改默认live2d列表的名称   
-   可以去 **项目路径/resourses/app/live2d/** 修改对应的文件夹名称      
-   
-2. 导入的live2d配置文件名称必须为 **改资源文件夹的名称.model.json**   
-   例：文件夹名称为 **血小板**，则配置文件应为：血小板.model.json (注 此配置文件不是 physics.json之类)  
-   如果不是重命名即可  
-   导入时如果**文件夹重名**则会取消这次导入
-   
-3. 如果你的live2d有音频文件**必须**将音频文件夹名称修改为 **voice** 否则会找不到音频路径
-
-4. **删除live2d**直接删除 **项目路径/resourses/app/live2d/** 中对应的文件即可  
-
-5. 如果你有多个live2d资源 可以直接把live2d文件夹复制到 **项目路径/resourses/app/live2d/**   
-
-6. 如需拖动live2d**请按住边缘拖动**，否则动不了   
-   如需**改变live2d大小**请去设置，拉动边框并不能改变live2d大小  
-
-详细信息可去看我的专栏: [地址]()
-
 ## 源码运行
 ```
 npm install // 安装依赖
@@ -34,6 +9,19 @@ npm run electron:serve // 编译项目
 npm run electron:build // 打包项目
 ```
 如果运行遇到问题可以看我的electron踩坑笔记: [地址](https://www.bilibili.com/read/cv13384411?spm_id_from=444.41.0.0)
+
+## 新增功能
++ 支持moc、moc3格式的live2d
++ 支持导入本地live2d
++ 支持修改或缩放live2d大小
++ 新增五子棋小游戏（上网课无聊可以玩玩，反正我没赢过AI） 
+
+详细信息和注意事项可去看我的专栏: [地址](https://www.bilibili.com/read/cv13411282?spm_id_from=444.41.0.0)
+## 效果预览
+![](https://raw.githubusercontent.com/q-mona/mona/master/images/vue3-live2d.png)
+
+
+
 
 
 

@@ -8,9 +8,6 @@ module.exports = {
         nsis: {
           oneClick: false,
           allowToChangeInstallationDirectory: true
-        },
-        win: {
-          icon: "D:/workplace/electron-vue-live2d/public/favicon.ico"
         }
       }
     }
