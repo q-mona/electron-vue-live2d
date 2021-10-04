@@ -1,7 +1,7 @@
 ## electron-vue3-live2d
 此项目为用vue3、electron实现的桌面看板娘  
 **本项目包含的live2d文件仅供学习使用请勿用于商业**   
-项目安装包：[百度云](https://pan.baidu.com/s/1qJBUWFbB0aY_04fEsS1Skw ) 提取码: 05fg
+项目安装包：[百度云](https://pan.baidu.com/s/1VVRA7JW9b73Kz7gjWrX_8Q) 提取码: bvyg
 ## 源码运行
 ```
 npm install // 安装依赖
